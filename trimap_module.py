@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import cv2, os, sys
 import numpy as np
+from faster_remake import set_value
 
 def extractImage(path):
     # error handller if the intended path is not found
@@ -91,7 +92,7 @@ class Toolbox:
         return bin_close
 
 
-def trimap(image, name, size, number, erosion=False):
+def trimap(image, name, size, number, erosion=False, optimized=True):
     """
     This function creates a trimap based on simple dilation algorithm
     Inputs [4]: a binary image (black & white only), name of the image, dilation pixels
@@ -128,10 +129,13 @@ def trimap(image, name, size, number, erosion=False):
     # Ensures only three pixel values available #
     # TODO: Optimization with Cython            #
     #############################################    
-    for i in range(0,row):
-        for j in range (0,col):
-            if (remake[i,j] != 0 and remake[i,j] != 255):
-                remake[i,j] = 127
+    if not optimized:
+        for i in range(0,row):
+            for j in range (0,col):
+                if (remake[i,j] != 0 and remake[i,j] != 255):
+                    remake[i,j] = 127
+    else:
+        remake = np.array(set_value(remake))
 
     path = "./images/results/"  ## Change the directory
     new_name = '{}px_'.format(size) + name + '_{}.png'.format(number)
