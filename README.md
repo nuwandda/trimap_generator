@@ -48,7 +48,7 @@ image   = extractImage(path);
 name    = "testImage";
 size    = 10; # how many pixel extension do you want to dilate
 number  = 1;  # numbering purpose 
-trimap(image, name, size, number, erosion=False)
+trimap(image, name, size, number, erosion=False, optimization=True)
 ```
 |**FULL IMAGE**| **MASK IMAGE**|**FOREGROUND**| **BACKGROUND**|
 |:----------:|:----------:|:----------:|:----------:|
@@ -68,7 +68,7 @@ image   = extractImage(path);
 
 kernel  = np.ones( (9,9), np.uint8 ); 
 opening = unit01.morph_close(image,kernel);
-trimap(opening, "trimap_result", 10, 1, erosion=False)
+trimap(opening, "trimap_result", 10, 1, erosion=False, optimization=True)
 ```
 |**NOISES**|**ORIGINAL IMAGES**|**TRIMAPS PREVIOUS**|**TRIMAPS NEW**|
 |:----------|:----------:|:----------:|:----------:|
